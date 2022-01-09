@@ -5,22 +5,29 @@ from pdf2image import convert_from_path
 import_path = Path("./pdfs")
 export_path = Path(import_path, "../images")
 
-def convert_directory_pdfs_to_images():
+def main():
     print("started converting from...\n")
 
-    validate_import_path(import_path)
-    create_export_directory(export_path)
+    has_valid_import_path = validate_import_path(import_path)
+    if has_valid_import_path:
+        create_export_directory(export_path)
 
-    pdf_file_names = get_directory_pdf_file_names(import_path)
-    for pdf_file_name in pdf_file_names:
-        pdf_file_path = Path(import_path, pdf_file_name + ".pdf")
-        convert_pdf_to_images(pdf_file_path, pdf_file_name, export_path)
+        pdf_file_names = get_directory_pdf_file_names(import_path)
+        for pdf_file_name in pdf_file_names:
+            pdf_file_path = Path(import_path, pdf_file_name + ".pdf")
+            convert_pdf_to_images(pdf_file_path, pdf_file_name, export_path)
+        
+        print("finished converting.")
     
-    print("finished converting.")
+    input("Press any key to exit.")
 
 def validate_import_path(import_path):
     if not(os.path.exists(import_path)):
-        return print("\"" + import_path + "\"" + " path does not exist!")
+        abs_import_path = str(os.path.abspath(import_path))
+        print("\"" + abs_import_path + "\"" + " is not available!")
+        return False
+    else: 
+        return True
 
 def create_export_directory(export_path):
     if not(os.path.exists(export_path)):
@@ -60,5 +67,5 @@ def save_images(images, images_export_path):
         image.save(image_path, "JPEG")
         image_counter += 1
 
-convert_directory_pdfs_to_images()
-input("Press any key to exit.")
+if __name__ == "__main__":
+    main()
