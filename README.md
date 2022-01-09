@@ -10,3 +10,6 @@ Depending on the pdf files's size conversion may take some time!
 
 ## Requirements for the python script
 You need to have python installed on your device. you also need to have [pdf2image] module (https://pypi.org/project/pdf2image/) installed and please pay attention to instructions for installing this module. As mentioned in the module's page, if you are on windows, you need to install poppler too.
+
+## Requirements for the executable version
+No requirements. just run the file!
