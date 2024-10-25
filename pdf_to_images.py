@@ -35,11 +35,16 @@ def main():
         try:
             images = convert_from_path(pdf_path, dpi=dpi, poppler_path=poppler_path)
 
-            # Save images
+            # Create output subdirectory for the PDF
             pdf_basename = os.path.splitext(filename)[0]
+            pdf_output_dir = os.path.join(output_dir, pdf_basename)
+            if not os.path.exists(pdf_output_dir):
+                os.makedirs(pdf_output_dir)
+
+            # Save images with page numbers as filenames
             for i, image in enumerate(images):
-                image_filename = f"{pdf_basename}_page_{i+1}.png"
-                image_path = os.path.join(output_dir, image_filename)
+                image_filename = f"{i+1}.png"
+                image_path = os.path.join(pdf_output_dir, image_filename)
                 image.save(image_path, 'PNG')
                 print(f'Saved {image_path}')
         except Exception as e:
